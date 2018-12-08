@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+
+int main(void)
+{
+    
+    srand(time(NULL));
+    int n=7,dist=0, a=0, b=0, alpha=0, f1=0, f2=0;
+    double prob=0,T=0;
+    
+    a=(rand()%7)+1;
+    printf("a is %d\n",a);
+    b=(rand()%7)+1;
+    printf("b is %d\n",b);
+    f1=(rand()%7)+1;
+    f2=(rand()%7)+1;
+    T=(rand()%7)+1;
+    printf("f1 is %d\n",f1);
+    printf("f2 is %d\n",f2);
+    printf("T is %d\n",T);
+    dist=sqrt(pow(a-b,2));
+    
+    printf("Distance is %d\n",dist);
+    
+    alpha=rand()%1+1;
+    
+    printf("alpha is %d\n",alpha);
+    
+    prob=exp((f1-f2)/T);
+    printf("prob is %lf\n",prob);
+    
+    T=alpha*T;
+    
+    printf("Now T is %lf",T);
+    
+}
