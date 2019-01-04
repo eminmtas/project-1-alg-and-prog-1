@@ -1,0 +1,75 @@
+//Including headerfiles
+#include <stdio.h>
+#include <math.h>
+#include <time.h>
+#include <stdlib.h>
+//Define part
+#define EPOCH 600
+#define N 40
+#define C 3
+//Function names
+float f(float x_array[]);
+float randomNumbers(float min,float max);
+//Main func.
+int main()
+{
+	//4th step
+	float x[2],x_n[2],best[2];
+	float fx,fx_n,fbest,T=80;
+	int i,j,iter=0;
+	float u;
+	srand(time(NULL));
+	x[0]=randomNumbers(-1,1);
+	x[1]=randomNumbers(-1,1);
+	best[0]=x[0];
+	best[1]=x[1];
+	fx=f(x);
+	fbest=fx;
+	//9th step
+	while(iter<EPOCH)
+	{
+		j=0;
+		while(j<N)
+		{
+			x_n[0]=x[0]+randomNumbers(-1,1);	
+			x_n[1]=x[1]+randomNumbers(-1,1);	
+			fx_n=f(x_n);
+			if(pow(fx_n,2)<pow(fx,2))
+			{
+				x[0]=x_n[0];
+				x[1]=x_n[1];
+				fx=fx_n;
+			}
+			else
+			{
+				u=randomNumbers(0,1);
+				if(u<exp((fx-fx_n)/T) && fx_n>=0)
+				{
+					x[0]=x_n[0];
+					x[1]=x_n[1];
+					fx=fx_n;
+				}
+			}
+			if(fx_n>=0 && (fx_n<fbest || fbest<0))
+			{
+				best[0]=x_n[0];
+				best[1]=x_n[1];
+				fbest=fx_n;
+			}
+			j+=N;
+		}
+		T=C/log(1+iter);
+		iter+=EPOCH;
+	}
+	printf("\nbest[0]=%f \nbest[1]=%f \nfbest=%f",best[0],best[1],fbest);
+	return 0;
+}
+//The functions
+float f(float x_array[])
+{
+	return x_array[0]*(pow(x_array[0],2)+x_array[1]-5)-x_array[1];
+}
+float randomNumbers(float min,float max)
+{
+	return min+(rand()/(float)RAND_MAX)*(max-min);
+}
